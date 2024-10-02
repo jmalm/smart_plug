@@ -49,11 +49,13 @@ class OnByPercentage(hass.Hass):
         message = f"Electricity price is {current_price} {currency}/kWh which is {reason}."
         if change_state:
             message += f" Turning {self.device.friendly_name} {target_state}."
+            if target_state == 'on':
+                self.turn_on(self.device.entity_id)
+            else:
+                self.turn_off(self.device.entity_id)
         else:
             message += f" {self.device.friendly_name} is already {target_state}."
         self.log(message, level=log_level)
-        self.set_state(self.device.entity_id, state=target_state, attributes={"reason": reason, "schedule": schedule},
-                       replace=True)
 
     def should_be_on(self, price, prices):
         if price <= self.price_threshold:
