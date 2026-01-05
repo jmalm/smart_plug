@@ -59,10 +59,10 @@ class OnByPercentage(hass.Hass):
 
     def should_be_on(self, price, prices):
         if price <= self.price_threshold:
-            return True, "lower than threshold ({self.price_threshold})"
+            return True, f"lower than threshold ({self.price_threshold})"
         if price_is_among_lowest(price, prices, self.percentage):
-            return True, "among the lowest {self.percentage} % of the hourly prices"
-        return False, "NOT among the lowest {self.percentage} % of the hourly prices"
+            return True, f"among the lowest {self.percentage} % of the hourly prices"
+        return False, f"NOT among the lowest {self.percentage} % of the hourly prices"
 
 
 def get_contiguous_slots(slots: list[dict[str, datetime]]) -> list[dict[str, datetime]]:
